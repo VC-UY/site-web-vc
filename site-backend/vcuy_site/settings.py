@@ -35,7 +35,7 @@ WSGI_APPLICATION = "vcuy_site.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": Path(os.environ.get("SITE_DB_PATH", BASE_DIR / "db.sqlite3")),
     }
 }
 
@@ -51,7 +51,7 @@ CORS_ALLOWED_ORIGINS = [
     o.strip()
     for o in os.environ.get(
         "CORS_ALLOWED_ORIGINS",
-        "http://localhost:3000,https://vc-uy.npe-techs.com",
+        "http://localhost:3010,http://localhost:3000,https://vc-uy.npe-techs.com",
     ).split(",")
     if o.strip()
 ]
