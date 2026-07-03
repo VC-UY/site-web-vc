@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00B0F0"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="520" height="360" rx="24" fill="#001440" opacity="0.5"/>
+  <rect x="60" y="220" width="50" height="80" rx="6" fill="url(#g1)" opacity="0.8"/>
+  <rect x="130" y="180" width="50" height="120" rx="6" fill="url(#g1)" opacity="0.9"/>
+  <rect x="200" y="140" width="50" height="160" rx="6" fill="url(#g1)"/>
+  <rect x="270" y="100" width="50" height="200" rx="6" fill="url(#g1)"/>
+  <rect x="340" y="160" width="50" height="140" rx="6" fill="url(#g1)" opacity="0.85"/>
+  <rect x="410" y="120" width="50" height="180" rx="6" fill="url(#g1)" opacity="0.95"/>
+  <path d="M80 80 L200 60 L320 90 L440 50" stroke="#00D4FF" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="80" cy="80" r="8" fill="#00FF88"/>
+  <circle cx="200" cy="60" r="8" fill="#00D4FF"/>
+  <circle cx="320" cy="90" r="8" fill="#00B0F0"/>
+  <circle cx="440" cy="50" r="8" fill="#00FF88"/>
+  <text x="260" y="40" text-anchor="middle" fill="#00D4FF" font-family="system-ui" font-size="14" font-weight="bold">METRIQUES LIVE</text>
+</svg>

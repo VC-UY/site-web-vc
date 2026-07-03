@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" fill="none">
+  <rect width="480" height="360" rx="20" fill="#002060"/>
+  <rect x="60" y="80" width="360" height="200" rx="16" fill="#001440" stroke="#00B0F0" stroke-width="2"/>
+  <path d="M100 240 L180 160 L240 200 L320 120 L380 180" stroke="#00D4FF" stroke-width="3" fill="none"/>
+  <circle cx="180" cy="160" r="8" fill="#00D4FF"/>
+  <circle cx="240" cy="200" r="8" fill="#00D4FF"/>
+  <circle cx="320" cy="120" r="8" fill="#00B0F0"/>
+  <text x="240" y="60" text-anchor="middle" fill="#FFFFFF" font-size="18" font-family="sans-serif">Impact scientifique</text>
+</svg>
