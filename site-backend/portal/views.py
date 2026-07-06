@@ -296,9 +296,14 @@ class InstallGuideView(APIView):
         host = settings.COORDINATOR_REDIS_HOST
         port = settings.REDIS_PROXY_PORT
         repo = settings.VOLUNTEER_REPO_URL
+        one_liner = (
+            f"git clone {repo}.git && cd volunteer-app-2025/volontaire "
+            f"&& chmod +x install-volontaire.sh && ./install-volontaire.sh"
+        )
         return Response(
             {
                 "repository": repo,
+                "one_liner": one_liner,
                 "coordinator": {"host": host, "proxy_port": int(port)},
                 "requirements": [
                     "Python 3.10 ou superieur",
@@ -309,35 +314,25 @@ class InstallGuideView(APIView):
                 ],
                 "platforms": {
                     "linux": {
-                        "title": "Linux / macOS",
-                        "steps": [
-                            f"git clone {repo}.git",
-                            "cd volunteer-app-2025/volontaire",
-                            "chmod +x install.sh run.sh",
-                            "./install.sh",
-                            "newgrp docker",
-                            f"Configurer COORDINATOR_HOST={host} et COORDINATOR_PROXY_PORT={port}",
-                            "./run.sh",
-                            "Ouvrir http://localhost:8003",
-                        ],
+                        "title": "Linux / macOS — une seule commande",
+                        "steps": [one_liner],
                     },
                     "windows": {
-                        "title": "Windows",
+                        "title": "Windows (PowerShell)",
                         "steps": [
                             f"git clone {repo}.git",
                             "cd volunteer-app-2025\\volontaire",
                             "PowerShell administrateur: Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
                             ".\\install_windows.ps1",
-                            f"Configurer COORDINATOR_HOST={host} et COORDINATOR_PROXY_PORT={port}",
                             ".\\run_windows.ps1",
                             "Ouvrir http://localhost:8003",
                         ],
                     },
                 },
                 "verification": [
-                    "Interface volontaire accessible",
-                    "Statut disponible sur le reseau",
-                    "Aucune erreur Redis dans les logs",
+                    "Interface volontaire accessible sur http://localhost:8003",
+                    "Statut disponible sur le reseau VC-UY",
+                    "Connexion coordinateur preconfiguree (aucun .env)",
                 ],
             }
         )
