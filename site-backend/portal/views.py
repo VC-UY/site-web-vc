@@ -293,46 +293,31 @@ class InstallGuideView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        host = settings.COORDINATOR_REDIS_HOST
-        port = settings.REDIS_PROXY_PORT
         repo = settings.VOLUNTEER_REPO_URL
-        one_liner = (
+        one_liner_linux = (
             f"git clone {repo}.git && cd volunteer-app-2025/volontaire "
             f"&& chmod +x install-volontaire.sh && ./install-volontaire.sh"
+        )
+        one_liner_windows = (
+            f"git clone {repo}.git; cd volunteer-app-2025\\volontaire; "
+            f"powershell -ExecutionPolicy Bypass -File .\\install-volontaire.ps1"
         )
         return Response(
             {
                 "repository": repo,
-                "one_liner": one_liner,
-                "coordinator": {"host": host, "proxy_port": int(port)},
+                "one_liner_linux": one_liner_linux,
+                "one_liner_windows": one_liner_windows,
                 "requirements": [
                     "Python 3.10 ou superieur",
-                    "Docker (service demarre)",
+                    "Docker Desktop (demarre)",
                     "Git",
                     "4 Go de RAM recommandes",
                     "Connexion Internet stable",
                 ],
-                "platforms": {
-                    "linux": {
-                        "title": "Linux / macOS — une seule commande",
-                        "steps": [one_liner],
-                    },
-                    "windows": {
-                        "title": "Windows (PowerShell)",
-                        "steps": [
-                            f"git clone {repo}.git",
-                            "cd volunteer-app-2025\\volontaire",
-                            "PowerShell administrateur: Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
-                            ".\\install_windows.ps1",
-                            ".\\run_windows.ps1",
-                            "Ouvrir http://localhost:8003",
-                        ],
-                    },
-                },
                 "verification": [
-                    "Interface volontaire accessible sur http://localhost:8003",
-                    "Statut disponible sur le reseau VC-UY",
-                    "Connexion coordinateur preconfiguree (aucun .env)",
+                    "Interface accessible sur http://localhost:8003",
+                    "Statut « disponible » dans l'application",
+                    "Aucune configuration manuelle requise",
                 ],
             }
         )
