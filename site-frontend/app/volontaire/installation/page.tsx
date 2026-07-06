@@ -11,10 +11,9 @@ import { links } from "@/lib/theme";
 
 type Guide = {
   repository: string;
-  one_liner: string;
-  coordinator: { host: string; proxy_port: number };
+  one_liner_linux: string;
+  one_liner_windows: string;
   requirements: string[];
-  platforms: Record<string, { title: string; steps: string[] }>;
   verification: string[];
 };
 
@@ -41,8 +40,8 @@ export default function InstallationPage() {
     <div className="px-6 py-16">
       <div className="container mx-auto max-w-4xl">
         <SectionTitle
-          title={`Guide d'installation, ${user.pseudonym}`}
-          subtitle="Une seule commande — le coordinateur est deja configure dans l'application"
+          title={`Installation, ${user.pseudonym}`}
+          subtitle="Une seule commande — tout est deja configure dans l'application"
         />
         {error && (
           <GlassCard>
@@ -55,19 +54,31 @@ export default function InstallationPage() {
         {guide && (
           <>
             <GlassCard className="mb-6 border-cyan-400/30">
-              <h3 className="text-lg font-bold text-white">Installation rapide (Linux / macOS)</h3>
+              <h3 className="text-lg font-bold text-white">Linux / macOS</h3>
               <p className="mt-2 text-sm text-white/70">
-                Copiez-collez cette commande dans un terminal. Aucun fichier .env a creer.
+                Copiez cette commande dans un terminal, puis ouvrez{" "}
+                <span className="text-cyan-300">http://localhost:8003</span>
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
                 <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-sm text-cyan-100">
-                  {guide.one_liner}
+                  {guide.one_liner_linux}
                 </code>
-                <CopyButton text={guide.one_liner} label="Copier" />
+                <CopyButton text={guide.one_liner_linux} label="Copier" />
               </div>
-              <p className="mt-3 text-xs text-white/50">
-                Puis ouvrez <span className="text-cyan-300">http://localhost:8003</span>
+            </GlassCard>
+
+            <GlassCard className="mb-6 border-cyan-400/30">
+              <h3 className="text-lg font-bold text-white">Windows (PowerShell)</h3>
+              <p className="mt-2 text-sm text-white/70">
+                Ouvrez PowerShell, copiez cette commande, puis ouvrez{" "}
+                <span className="text-cyan-300">http://localhost:8003</span>
               </p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
+                <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-sm text-cyan-100">
+                  {guide.one_liner_windows}
+                </code>
+                <CopyButton text={guide.one_liner_windows} label="Copier" />
+              </div>
             </GlassCard>
 
             <GlassCard className="mb-6">
@@ -83,43 +94,9 @@ export default function InstallationPage() {
                 rel="noopener noreferrer"
                 className="mt-4 inline-block rounded-lg bg-cyan-500/20 px-4 py-2 text-sm text-cyan-200"
               >
-                Depot GitHub volunteer-app-2025
+                Depot GitHub
               </a>
             </GlassCard>
-
-            <GlassCard className="mb-6">
-              <h3 className="text-lg font-bold text-white">Coordinateur (preconfigure)</h3>
-              <p className="mt-2 text-sm text-white/70">
-                Ces valeurs sont deja dans l&apos;application — rien a taper.
-              </p>
-              <p className="mt-2 font-mono text-sm text-cyan-300">
-                COORDINATOR_HOST={guide.coordinator.host}
-              </p>
-              <p className="font-mono text-sm text-cyan-300">
-                COORDINATOR_PROXY_PORT={guide.coordinator.proxy_port}
-              </p>
-            </GlassCard>
-
-            {Object.entries(guide.platforms)
-              .filter(([key]) => key !== "linux")
-              .map(([, platform]) => (
-                <GlassCard key={platform.title} className="mb-6">
-                  <h3 className="text-lg font-bold text-cyan-300">{platform.title}</h3>
-                  <ol className="mt-4 space-y-3">
-                    {platform.steps.map((step, i) => (
-                      <li key={step} className="flex flex-col gap-2 sm:flex-row sm:items-start">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-300">
-                          {i + 1}
-                        </span>
-                        <code className="flex-1 break-all rounded-lg bg-black/30 px-3 py-2 text-sm text-white/85">
-                          {step}
-                        </code>
-                        <CopyButton text={step} />
-                      </li>
-                    ))}
-                  </ol>
-                </GlassCard>
-              ))}
 
             <GlassCard>
               <h3 className="text-lg font-bold text-white">Verification</h3>
