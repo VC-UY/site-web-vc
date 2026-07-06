@@ -295,11 +295,11 @@ class InstallGuideView(APIView):
 
         repo = settings.VOLUNTEER_REPO_URL
         one_liner_linux = (
-            f"git clone {repo}.git && cd volunteer-app-2025/volontaire "
+            f"git clone -b main {repo}.git && cd volunteer-app-2025/volontaire "
             f"&& chmod +x install-volontaire.sh && ./install-volontaire.sh"
         )
         one_liner_windows = (
-            f"git clone {repo}.git; cd volunteer-app-2025\\volontaire; "
+            f"git clone -b main {repo}.git; cd volunteer-app-2025\\volontaire; "
             f"powershell -ExecutionPolicy Bypass -File .\\install-volontaire.ps1"
         )
         return Response(
