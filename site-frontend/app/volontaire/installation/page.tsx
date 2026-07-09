@@ -12,6 +12,8 @@ import { links } from "@/lib/theme";
 type Guide = {
   repository: string;
   one_liner_linux: string;
+  one_liner_linux_service: string;
+  one_liner_linux_uninstall: string;
   one_liner_windows: string;
   requirements: string[];
   verification: string[];
@@ -67,6 +69,19 @@ export default function InstallationPage() {
               </div>
             </GlassCard>
 
+            <GlassCard className="mb-6 border-emerald-400/30">
+              <h3 className="text-lg font-bold text-white">Linux (recommande) - mode demon au demarrage</h3>
+              <p className="mt-2 text-sm text-white/70">
+                Cette commande installe un service systemd. L'application volontaire demarre toute seule apres reboot.
+              </p>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
+                <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-sm text-emerald-100">
+                  {guide.one_liner_linux_service}
+                </code>
+                <CopyButton text={guide.one_liner_linux_service} label="Copier" />
+              </div>
+            </GlassCard>
+
             <GlassCard className="mb-6 border-cyan-400/30">
               <h3 className="text-lg font-bold text-white">Windows (PowerShell)</h3>
               <p className="mt-2 text-sm text-white/70">
@@ -105,6 +120,15 @@ export default function InstallationPage() {
                   <li key={v}>✓ {v}</li>
                 ))}
               </ul>
+              <div className="mt-5 rounded-lg border border-rose-400/30 bg-rose-500/10 p-4">
+                <h4 className="text-sm font-semibold text-rose-200">Quitter le programme volontaire (une commande Linux)</h4>
+                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start">
+                  <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-xs text-rose-100">
+                    {guide.one_liner_linux_uninstall}
+                  </code>
+                  <CopyButton text={guide.one_liner_linux_uninstall} label="Copier" />
+                </div>
+              </div>
               <p className="mt-4 text-xs text-white/50">
                 Application locale : http://localhost:8003 — Manager : {links.manager}
               </p>
