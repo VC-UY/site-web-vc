@@ -298,6 +298,13 @@ class InstallGuideView(APIView):
             f"git clone -b main {repo}.git && cd volunteer-app-2025/volontaire "
             f"&& chmod +x install-volontaire.sh && ./install-volontaire.sh"
         )
+        one_liner_linux_service = (
+            f"git clone -b main {repo}.git && cd volunteer-app-2025 "
+            f"&& chmod +x install-volontaire-service.sh && ./install-volontaire-service.sh"
+        )
+        one_liner_linux_uninstall = (
+            "cd volunteer-app-2025 && chmod +x uninstall-volontaire.sh && ./uninstall-volontaire.sh"
+        )
         one_liner_windows = (
             f"git clone -b main {repo}.git; cd volunteer-app-2025\\volontaire; "
             f"powershell -ExecutionPolicy Bypass -File .\\install-volontaire.ps1"
@@ -306,6 +313,8 @@ class InstallGuideView(APIView):
             {
                 "repository": repo,
                 "one_liner_linux": one_liner_linux,
+                "one_liner_linux_service": one_liner_linux_service,
+                "one_liner_linux_uninstall": one_liner_linux_uninstall,
                 "one_liner_windows": one_liner_windows,
                 "requirements": [
                     "Python 3.10 ou superieur",
@@ -317,6 +326,7 @@ class InstallGuideView(APIView):
                 "verification": [
                     "Interface accessible sur http://localhost:8003",
                     "Statut « disponible » dans l'application",
+                    "Services systemd actifs au demarrage (mode daemon Linux)",
                     "Aucune configuration manuelle requise",
                 ],
             }
