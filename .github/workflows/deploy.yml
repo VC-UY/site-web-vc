@@ -33,11 +33,24 @@ jobs:
           script: |
             set -euo pipefail
             cd /opt/vc-uy
-            docker compose -f deploy/docker-compose.prod.yml --env-file deploy/.env.production build site-backend site-frontend
-            docker compose -f deploy/docker-compose.prod.yml --env-file deploy/.env.production up -d site-backend site-frontend
-            for i in 1 2 3 4 5 6; do
+            COMPOSE_FILE=deploy/docker-compose.prod.yml
+            ENV_FILE=deploy/.env.production
+            # Toujours rafraîchir le helper depuis le dépôt Site (évite drift VPS)
+            mkdir -p deploy/scripts
+            if [ -f SITE/deploy-helpers/compose-up-retry.sh ]; then
+              cp SITE/deploy-helpers/compose-up-retry.sh deploy/scripts/compose-up-retry.sh
+            fi
+            chmod +x deploy/scripts/compose-up-retry.sh
+
+            docker compose -f "$COMPOSE_FILE" --env-file "$ENV_FILE" build site-backend site-frontend
+
+            # --no-deps : ne recrée PAS coordinator/proxy (conflits de noms CI)
+            COMPOSE_UP_NO_DEPS=1 deploy/scripts/compose-up-retry.sh \
+              "$COMPOSE_FILE" "$ENV_FILE" site-backend site-frontend
+
+            for i in 1 2 3 4 5 6 7 8; do
               curl -sf http://127.0.0.1:8003/health/ && break
-              sleep 10
+              sleep 8
             done
             curl -sf http://127.0.0.1:8003/health/
             curl -sf http://127.0.0.1:13100/ >/dev/null
