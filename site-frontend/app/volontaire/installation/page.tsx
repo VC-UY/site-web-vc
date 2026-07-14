@@ -45,7 +45,7 @@ export default function InstallationPage() {
       <div className="container mx-auto max-w-4xl">
         <SectionTitle
           title={`Installation, ${user.pseudonym}`}
-          subtitle="Une seule commande — tout est deja configure dans l'application"
+          subtitle="Une seule commande (sans Git) — archive + installation automatique"
         />
         {error && (
           <GlassCard>
@@ -60,7 +60,7 @@ export default function InstallationPage() {
             <GlassCard className="mb-6 border-cyan-400/30">
               <h3 className="text-lg font-bold text-white">Linux / macOS</h3>
               <p className="mt-2 text-sm text-white/70">
-                Copiez cette commande dans un terminal, puis ouvrez{" "}
+                Copiez cette commande dans un terminal (pas besoin de Git), puis ouvrez{" "}
                 <span className="text-cyan-300">http://localhost:8003</span>
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">

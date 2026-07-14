@@ -293,17 +293,16 @@ class InstallGuideView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        repo = settings.VOLUNTEER_REPO_URL
-        one_liner_linux = (
-            f"git clone -b main {repo}.git && cd volunteer-app-2025/volontaire "
-            f"&& chmod +x install-volontaire.sh && ./install-volontaire.sh"
-        )
+        repo = settings.VOLUNTEER_REPO_URL.rstrip("/")
+        raw_base = repo.replace("https://github.com/", "https://raw.githubusercontent.com/") + "/main"
+        one_liner_linux = f"curl -fsSL {raw_base}/get-volontaire.sh | bash"
         one_liner_linux_service = (
-            f"git clone -b main {repo}.git && cd volunteer-app-2025 "
-            f"&& chmod +x install-volontaire-service.sh && ./install-volontaire-service.sh"
+            f"curl -fsSL {raw_base}/get-volontaire.sh | bash && "
+            f"cd ~/VC-UY/volunteer-app-2025 && chmod +x install-volontaire-service.sh && "
+            f"./install-volontaire-service.sh"
         )
         one_liner_linux_uninstall = (
-            "cd volunteer-app-2025 && chmod +x uninstall-volontaire.sh && ./uninstall-volontaire.sh"
+            "cd ~/VC-UY/volunteer-app-2025 && chmod +x uninstall-volontaire.sh && ./uninstall-volontaire.sh"
         )
         one_liner_agent_uninstall = (
             "systemctl --user disable --now vc-agent.service 2>/dev/null; "
@@ -312,8 +311,7 @@ class InstallGuideView(APIView):
             "pkill -f 'agent/main.py' 2>/dev/null; true"
         )
         one_liner_windows = (
-            f"git clone -b main {repo}.git; cd volunteer-app-2025\\volontaire; "
-            f"powershell -ExecutionPolicy Bypass -File .\\install-volontaire.ps1"
+            f"irm {raw_base}/get-volontaire.ps1 | iex"
         )
         return Response(
             {
@@ -325,10 +323,10 @@ class InstallGuideView(APIView):
                 "one_liner_windows": one_liner_windows,
                 "requirements": [
                     "Python 3.10 ou superieur",
-                    "Git",
+                    "curl (Linux/macOS) ou PowerShell (Windows)",
                     "4 Go de RAM recommandes",
                     "Connexion Internet stable",
-                    "Torch CPU (installe automatiquement avec l'agent de prediction)",
+                    "Pas besoin de Git — installation par archive",
                 ],
                 "verification": [
                     "Interface accessible sur http://localhost:8003",
@@ -338,9 +336,9 @@ class InstallGuideView(APIView):
                     "Snapshots visibles sur le site (onglet Donnees recherche)",
                 ],
                 "uninstall_steps": [
-                    "1. Arreter l'app volontaire : ./uninstall-volontaire.sh (depuis volunteer-app-2025/)",
+                    "1. Arreter l'app volontaire : ./uninstall-volontaire.sh (depuis ~/VC-UY/volunteer-app-2025/)",
                     "2. Arreter l'agent de collecte/prediction (commande one_liner_agent_uninstall)",
-                    "3. Optionnel : supprimer le dossier clone volunteer-app-2025",
+                    "3. Optionnel : supprimer le dossier ~/VC-UY/volunteer-app-2025",
                     "4. Vous n'etes plus contributeur : plus de taches ni de telemetrie envoyee",
                 ],
             }
