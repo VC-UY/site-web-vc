@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/tableau-de-bord",
     "/analyses",
+    "/donnees",
     "/volontaires",
     "/badges",
     "/volontaire/inscription",

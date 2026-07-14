@@ -18,7 +18,7 @@ export const links = {
   manager: process.env.NEXT_PUBLIC_MANAGER_URL || "https://manager-vc-uy.npe-techs.com",
   coordinator: process.env.NEXT_PUBLIC_COORDINATOR_URL || "https://coordinator-vc-uy.npe-techs.com",
   volunteerRepo: process.env.NEXT_PUBLIC_VOLUNTEER_REPO || "https://github.com/VC-UY/volunteer-app-2025",
-  api: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8003/api",
+  api: process.env.NEXT_PUBLIC_API_URL || "https://vc-uy.npe-techs.com/api",
   site: process.env.NEXT_PUBLIC_SITE_URL || "https://vc-uy.npe-techs.com",
 };
 
@@ -26,6 +26,7 @@ export const navItems = [
   { href: "/", label: "Accueil" },
   { href: "/tableau-de-bord", label: "Tableau de bord" },
   { href: "/analyses", label: "Analyses" },
+  { href: "/donnees", label: "Donnees recherche" },
   { href: "/volontaires", label: "Volontaires" },
   { href: "/badges", label: "Badges et points" },
   { href: "/volontaire/inscription", label: "Devenir volontaire" },

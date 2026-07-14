@@ -305,6 +305,12 @@ class InstallGuideView(APIView):
         one_liner_linux_uninstall = (
             "cd volunteer-app-2025 && chmod +x uninstall-volontaire.sh && ./uninstall-volontaire.sh"
         )
+        one_liner_agent_uninstall = (
+            "systemctl --user disable --now vc-agent.service 2>/dev/null; "
+            "rm -f ~/.config/systemd/user/vc-agent.service; "
+            "systemctl --user daemon-reload; "
+            "pkill -f 'agent/main.py' 2>/dev/null; true"
+        )
         one_liner_windows = (
             f"git clone -b main {repo}.git; cd volunteer-app-2025\\volontaire; "
             f"powershell -ExecutionPolicy Bypass -File .\\install-volontaire.ps1"
@@ -315,19 +321,27 @@ class InstallGuideView(APIView):
                 "one_liner_linux": one_liner_linux,
                 "one_liner_linux_service": one_liner_linux_service,
                 "one_liner_linux_uninstall": one_liner_linux_uninstall,
+                "one_liner_agent_uninstall": one_liner_agent_uninstall,
                 "one_liner_windows": one_liner_windows,
                 "requirements": [
                     "Python 3.10 ou superieur",
-                    "Docker Desktop (demarre)",
                     "Git",
                     "4 Go de RAM recommandes",
                     "Connexion Internet stable",
+                    "Torch CPU (installe automatiquement avec l'agent de prediction)",
                 ],
                 "verification": [
                     "Interface accessible sur http://localhost:8003",
                     "Statut « disponible » dans l'application",
+                    "Agent prediction : http://127.0.0.1:7071/health",
                     "Services systemd actifs au demarrage (mode daemon Linux)",
-                    "Aucune configuration manuelle requise",
+                    "Snapshots visibles sur le site (onglet Donnees recherche)",
+                ],
+                "uninstall_steps": [
+                    "1. Arreter l'app volontaire : ./uninstall-volontaire.sh (depuis volunteer-app-2025/)",
+                    "2. Arreter l'agent de collecte/prediction (commande one_liner_agent_uninstall)",
+                    "3. Optionnel : supprimer le dossier clone volunteer-app-2025",
+                    "4. Vous n'etes plus contributeur : plus de taches ni de telemetrie envoyee",
                 ],
             }
         )

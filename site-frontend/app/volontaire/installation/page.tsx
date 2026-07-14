@@ -14,9 +14,11 @@ type Guide = {
   one_liner_linux: string;
   one_liner_linux_service: string;
   one_liner_linux_uninstall: string;
+  one_liner_agent_uninstall?: string;
   one_liner_windows: string;
   requirements: string[];
   verification: string[];
+  uninstall_steps?: string[];
 };
 
 export default function InstallationPage() {
@@ -121,16 +123,42 @@ export default function InstallationPage() {
                 ))}
               </ul>
               <div className="mt-5 rounded-lg border border-rose-400/30 bg-rose-500/10 p-4">
-                <h4 className="text-sm font-semibold text-rose-200">Quitter le programme volontaire (une commande Linux)</h4>
-                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start">
+                <h4 className="text-sm font-semibold text-rose-200">
+                  Quitter le programme volontaire (ne plus etre contributeur)
+                </h4>
+                {guide.uninstall_steps && (
+                  <ul className="mt-3 space-y-1 text-xs text-rose-100/90">
+                    {guide.uninstall_steps.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                )}
+                <p className="mt-3 text-xs text-rose-100/80">1) Desinstaller l&apos;application volontaire</p>
+                <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-start">
                   <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-xs text-rose-100">
                     {guide.one_liner_linux_uninstall}
                   </code>
                   <CopyButton text={guide.one_liner_linux_uninstall} label="Copier" />
                 </div>
+                {guide.one_liner_agent_uninstall && (
+                  <>
+                    <p className="mt-4 text-xs text-rose-100/80">
+                      2) Arreter l&apos;agent de collecte / prediction (demon au demarrage)
+                    </p>
+                    <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-start">
+                      <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-xs text-rose-100">
+                        {guide.one_liner_agent_uninstall}
+                      </code>
+                      <CopyButton text={guide.one_liner_agent_uninstall} label="Copier" />
+                    </div>
+                  </>
+                )}
               </div>
               <p className="mt-4 text-xs text-white/50">
-                Application locale : http://localhost:8003 — Manager : {links.manager}
+                Application locale : http://localhost:8003 — Manager : {links.manager} — Donnees :{" "}
+                <a href="/donnees" className="text-cyan-300 underline">
+                  /donnees
+                </a>
               </p>
             </GlassCard>
           </>
