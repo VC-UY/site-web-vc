@@ -55,7 +55,7 @@ MISSION_DATA = {
         },
         {
             "title": "Securite",
-            "description": "Execution Docker, controle des ressources, isolement des taches.",
+            "description": "Execution via runtime vc-uyr (bundles), controle des ressources, isolement des taches.",
         },
     ],
     "gamification_badges": [
