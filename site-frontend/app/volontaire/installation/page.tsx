@@ -45,7 +45,7 @@ export default function InstallationPage() {
       <div className="container mx-auto max-w-4xl">
         <SectionTitle
           title={`Installation, ${user.pseudonym}`}
-          subtitle="Une seule commande (sans Git) — archive + installation automatique"
+          subtitle="Une seule commande (sans Git) — archive, arriere-plan, relance au reboot"
         />
         {error && (
           <GlassCard>
@@ -58,9 +58,10 @@ export default function InstallationPage() {
         {guide && (
           <>
             <GlassCard className="mb-6 border-cyan-400/30">
-              <h3 className="text-lg font-bold text-white">Linux / macOS</h3>
+              <h3 className="text-lg font-bold text-white">Linux / macOS (recommande)</h3>
               <p className="mt-2 text-sm text-white/70">
-                Copiez cette commande dans un terminal (pas besoin de Git), puis ouvrez{" "}
+                Une seule commande (pas de Git). Sur Linux, tout tourne en arriere-plan : vous pouvez fermer
+                le terminal, et au reboot ca se relance seul. Puis ouvrez{" "}
                 <span className="text-cyan-300">http://localhost:8003</span>
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
@@ -72,9 +73,10 @@ export default function InstallationPage() {
             </GlassCard>
 
             <GlassCard className="mb-6 border-emerald-400/30">
-              <h3 className="text-lg font-bold text-white">Linux (recommande) - mode demon au demarrage</h3>
+              <h3 className="text-lg font-bold text-white">Linux — relancer les services (deja installe)</h3>
               <p className="mt-2 text-sm text-white/70">
-                Cette commande installe un service systemd. L'application volontaire demarre toute seule apres reboot.
+                Si l&apos;app est deja installee et que vous voulez seulement redemarrer runtime + agent + UI
+                sans reinstaller.
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
                 <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-sm text-emerald-100">

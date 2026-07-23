@@ -295,20 +295,23 @@ class InstallGuideView(APIView):
 
         repo = settings.VOLUNTEER_REPO_URL.rstrip("/")
         raw_base = repo.replace("https://github.com/", "https://raw.githubusercontent.com/") + "/main"
+        # Une seule commande : install + demarrage arriere-plan (systemd user) + reboot
         one_liner_linux = f"curl -fsSL {raw_base}/get-volontaire.sh | bash"
         one_liner_linux_service = (
-            f"curl -fsSL {raw_base}/get-volontaire.sh | bash && "
-            f"cd ~/VC-UY/volunteer-app-2025 && chmod +x install-volontaire-service.sh && "
-            f"./install-volontaire-service.sh"
+            "cd ~/VC-UY/volunteer-app-2025/volontaire && chmod +x install_daemon.sh && ./install_daemon.sh"
         )
         one_liner_linux_uninstall = (
+            "systemctl --user disable --now vc-uy-volunteer vc-uy-agent vc-uy-runtime 2>/dev/null; "
+            "rm -f ~/.config/systemd/user/vc-uy-*.service; "
+            "systemctl --user daemon-reload; "
             "cd ~/VC-UY/volunteer-app-2025 && chmod +x uninstall-volontaire.sh && ./uninstall-volontaire.sh"
         )
         one_liner_agent_uninstall = (
-            "systemctl --user disable --now vc-agent.service 2>/dev/null; "
-            "rm -f ~/.config/systemd/user/vc-agent.service; "
+            "systemctl --user disable --now vc-uy-volunteer vc-uy-agent vc-uy-runtime vc-agent.service 2>/dev/null; "
+            "rm -f ~/.config/systemd/user/vc-uy-*.service ~/.config/systemd/user/vc-agent.service; "
             "systemctl --user daemon-reload; "
-            "pkill -f 'agent/main.py' 2>/dev/null; true"
+            "pkill -f 'agent/main.py' 2>/dev/null; "
+            "pkill -f 'runtime_compat_server.py' 2>/dev/null; true"
         )
         one_liner_windows = (
             f"irm {raw_base}/get-volontaire.ps1 | iex"
@@ -328,17 +331,19 @@ class InstallGuideView(APIView):
                     "Connexion Internet stable",
                     "Pas besoin de Git — installation par archive",
                     "Install legere (~100 Mo) : PyTorch/CIFAR telecharges seulement a la 1re tache DL",
+                    "Linux : demarrage en arriere-plan (fermer le terminal OK) + relance au reboot",
                 ],
                 "verification": [
-                    "Interface accessible sur http://localhost:8003",
+                    "Interface accessible sur http://localhost:8003 (vous pouvez fermer le terminal)",
                     "Statut « disponible » dans l'application",
                     "Agent prediction : http://127.0.0.1:7071/health",
-                    "Services systemd actifs au demarrage (mode daemon Linux)",
+                    "systemctl --user status vc-uy-volunteer (runtime + agent + UI)",
+                    "Logs : ~/VC-UY/volunteer-app-2025/volontaire/.volunteer/logs/",
                     "Snapshots visibles sur le site (onglet Donnees recherche)",
                 ],
                 "uninstall_steps": [
-                    "1. Arreter l'app volontaire : ./uninstall-volontaire.sh (depuis ~/VC-UY/volunteer-app-2025/)",
-                    "2. Arreter l'agent de collecte/prediction (commande one_liner_agent_uninstall)",
+                    "1. Arreter les services systemd vc-uy-* (commande desinstallation ci-dessous)",
+                    "2. Lancer uninstall-volontaire.sh si present",
                     "3. Optionnel : supprimer le dossier ~/VC-UY/volunteer-app-2025",
                     "4. Vous n'etes plus contributeur : plus de taches ni de telemetrie envoyee",
                 ],
