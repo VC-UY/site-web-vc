@@ -327,6 +327,7 @@ class InstallGuideView(APIView):
                     "4 Go de RAM recommandes",
                     "Connexion Internet stable",
                     "Pas besoin de Git — installation par archive",
+                    "Install legere (~100 Mo) : PyTorch/CIFAR telecharges seulement a la 1re tache DL",
                 ],
                 "verification": [
                     "Interface accessible sur http://localhost:8003",
