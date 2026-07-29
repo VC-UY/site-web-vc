@@ -45,7 +45,7 @@ export default function InstallationPage() {
       <div className="container mx-auto max-w-4xl">
         <SectionTitle
           title={`Installation, ${user.pseudonym}`}
-          subtitle="Une seule commande (sans Git) — archive, arriere-plan, relance au reboot"
+          subtitle="Une seule commande (sans Git, sans sudo/Ashley) — runtime compat, arriere-plan, relance au reboot"
         />
         {error && (
           <GlassCard>
@@ -73,10 +73,10 @@ export default function InstallationPage() {
             </GlassCard>
 
             <GlassCard className="mb-6 border-emerald-400/30">
-              <h3 className="text-lg font-bold text-white">Linux — relancer les services (deja installe)</h3>
+              <h3 className="text-lg font-bold text-white">Linux — maj / deja installe (ZBook, Baudouin…)</h3>
               <p className="mt-2 text-sm text-white/70">
-                Si l&apos;app est deja installee et que vous voulez seulement redemarrer runtime + agent + UI
-                sans reinstaller.
+                Relancez cette commande pour basculer vers le runtime compat (sans Ashley / sans sudo)
+                et redemarrer runtime + agent + UI.
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
                 <code className="flex-1 break-all rounded-lg bg-black/40 px-4 py-3 text-sm text-emerald-100">
