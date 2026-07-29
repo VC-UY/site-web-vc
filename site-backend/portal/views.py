@@ -296,9 +296,10 @@ class InstallGuideView(APIView):
         repo = settings.VOLUNTEER_REPO_URL.rstrip("/")
         raw_base = repo.replace("https://github.com/", "https://raw.githubusercontent.com/") + "/main"
         # Une seule commande : install + demarrage arriere-plan (systemd user) + reboot
+        # Runtime compat (sans Ashley / sans sudo) — meme commande pour install et mise a jour
         one_liner_linux = f"curl -fsSL {raw_base}/get-volontaire.sh | bash"
         one_liner_linux_service = (
-            "cd ~/VC-UY/volunteer-app-2025/volontaire && chmod +x install_daemon.sh && ./install_daemon.sh"
+            f"curl -fsSL {raw_base}/get-volontaire.sh | bash"
         )
         one_liner_linux_uninstall = (
             "systemctl --user disable --now vc-uy-volunteer vc-uy-agent vc-uy-runtime 2>/dev/null; "
